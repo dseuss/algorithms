@@ -4,19 +4,19 @@ import "fmt"
 
 
 type QuickFind struct {
-   id []uint
+   id []int
 }
 
 
-func (this *QuickFind) Init(size uint) {
-   this.id = make([]uint, size)
+func (this *QuickFind) Init(size int) {
+   this.id = make([]int, size)
    for index, _ := range this.id {
-      this.id[index] = uint(index)
+      this.id[index] = int(index)
    }
 }
 
 
-func (this *QuickFind) Union(i, j uint) {
+func (this *QuickFind) Union(i, j int) {
    iid := this.id[i]
    for index, value := range this.id {
       if iid == value {
@@ -26,7 +26,7 @@ func (this *QuickFind) Union(i, j uint) {
 }
 
 
-func (this *QuickFind) Find(i, j uint) bool {
+func (this *QuickFind) Find(i, j int) bool {
    return this.id[i] == this.id[j]
 }
 
