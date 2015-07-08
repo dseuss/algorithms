@@ -6,15 +6,18 @@ import (
     "fmt"
 )
 
+const no_element_in_queue_error string = "No element in queue."
 
-type Queue struct {
+
+type DAQueue struct {
     head int
     tail int
     elem []int
+
 }
 
 
-func (this *Queue) Len() int {
+func (this *DAQueue) Len() int {
     if len(this.elem) < 1 {
         return 0
     } else {
@@ -23,12 +26,12 @@ func (this *Queue) Len() int {
 }
 
 
-func (this *Queue) Asize() int {
+func (this *DAQueue) Asize() int {
     return len(this.elem)
 }
 
 
-func (this *Queue) Queue(val int) (err error) {
+func (this *DAQueue) Queue(val int) (err error) {
     if len(this.elem) < 1 {
         err = this.resize(1)
         if err != nil {
@@ -49,8 +52,13 @@ func (this *Queue) Queue(val int) (err error) {
 }
 
 
-func (this *Queue) Deque() (val int, err error) {
+func (this *DAQueue) Deque() (val int, err error) {
+    if this.Len() <= 0 {
+        return 0, errors.New(no_element_in_queue_error)
+    }
+
     val = this.elem[this.head]
+    this.elem[this.head] = 0    // Clean up for the GC
     this.head = (this.head + 1) % len(this.elem)
 
     if 4 * this.Len() <= len(this.elem) {
@@ -64,9 +72,9 @@ func (this *Queue) Deque() (val int, err error) {
 }
 
 
-func (this *Queue) resize(newsize int) error {
+func (this *DAQueue) resize(newsize int) error {
     if clen := this.Len(); clen > newsize {
-        errstr := fmt.Sprintf("Resizing Queue failed: new size too small: %v < %v",
+        errstr := fmt.Sprintf("Resizing DAQueue failed: new size too small: %v < %v",
                               clen, newsize)
         return errors.New(errstr)
     }

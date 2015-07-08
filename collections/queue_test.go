@@ -8,7 +8,7 @@ import (
 
 
 func TestResizing(t *testing.T) {
-    var qu Queue
+    var qu DAQueue
     const n_max = 10
 
     for n := uint(0); n <= n_max; n++ {
@@ -37,7 +37,7 @@ func TestResizing(t *testing.T) {
 
 func TestCorrectness(t *testing.T) {
     var testarr = []int {1, 2, 3, 4}
-    var qu Queue
+    var qu DAQueue
 
     testQueue := func (arr []int) {
         for _, val := range arr {
