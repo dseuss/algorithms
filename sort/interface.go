@@ -8,6 +8,16 @@ type Sortable interface {
 }
 
 
+func IsSorted(target Sortable) bool {
+    for i := 0; i < target.Len() - 1; i++ {
+        if target.Less(i + 1, i) {
+            return false
+        }
+    }
+    return true
+}
+
+
 type IntSlice []int
 
 
@@ -20,5 +30,7 @@ func (this *IntSlice) Less(i, j int) bool {
 }
 
 func (this *IntSlice) Swap(i, j int) {
-    (*this)[i], (*this)[j] = (*this)[j], (*this)[i]
+    if i != j {
+        (*this)[i], (*this)[j] = (*this)[j], (*this)[i]
+    }
 }
