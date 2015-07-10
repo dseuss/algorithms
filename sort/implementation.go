@@ -18,3 +18,14 @@ func Selection(target Sortable) {
         target.Swap(i, i_min)
     }
 }
+
+
+func Insertion(target Sortable) {
+    for i := 1; i < target.Len(); i++ {
+        j := i - 1
+        for (j >= 0) && (target.Less(j+1, j)) {
+            target.Swap(j, j+1)
+            j--
+        }
+    }
+}

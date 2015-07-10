@@ -9,8 +9,15 @@ import (
     "fmt"
 )
 
-var sorting_functions []func(Sortable) = []func (Sortable) { Selection }
-var sorting_functions_desc []string = []string { "Selection sort" }
+var sorting_functions []func(Sortable) = []func (Sortable) {
+    Selection,
+    Insertion,
+}
+
+var sorting_functions_desc []string = []string {
+    "Selection sort",
+    "Insertion Sort",
+}
 
 
 func random_intslice(length int) (result IntSlice) {
@@ -46,7 +53,7 @@ func TestIsSorted(t *testing.T) {
 
 
 func TestSorting(t *testing.T) {
-    instance_lengths := []int {5, 5, 10}
+    instance_lengths := []int {5, 5, 10, 20}
 
     for instance_nr, length := range instance_lengths {
         for index, sort := range sorting_functions {
