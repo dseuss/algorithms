@@ -4,6 +4,8 @@ package collections
 import (
     "errors"
     "math/rand"
+    "github.com/dseuss/algorithms/sort"
+    "fmt"
 )
 
 
@@ -47,4 +49,23 @@ func (this* RQueue) sampleIndex() (int, error) {
     return (i + this.head) % len(this.elem), nil
 }
 
-// TODO Iterator requiring shuffle
+
+// TODO This is not adaptive against change
+func (this* RQueue) Iter()  <-chan int {
+    ch := make(chan int)
+    var indices sort.IntSlice = make([]int, this.Len())
+    for i := range indices {
+        indices[i] = i
+    }
+    sort.Shuffle(&indices)
+
+    go func() {
+        fmt.Println(indices)
+        for _, index := range indices {
+            ch <- this.elem[index]
+        }
+        close(ch)
+    } ();
+
+    return ch
+}
